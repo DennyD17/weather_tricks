@@ -1,0 +1,20 @@
+What time of the day is the most commonly occurring hottest time?
+14:40
+
+What is the average time of hottest daily temperature (over month)?
+6: 13: 38
+5: 14: 40
+7: 8: 50
+
+
+Which are the Top Ten hottest times on distinct days, preferably sorted by date order?
+Date: 2006-06-06, Time: 14:20, Temperature 23.2
+Date: 2006-06-11, Time: 11:00, Temperature 22.4
+Date: 2006-06-28, Time: 10:40, Temperature 21.4
+Date: 2006-06-15, Time: 13:50, Temperature 21.1
+Date: 2006-06-08, Time: 16:20, Temperature 20.7
+Date: 2006-06-10, Time: 13:00, Temperature 19.9
+Date: 2006-06-03, Time: 14:50, Temperature 19.6
+Date: 2006-06-07, Time: 13:00, Temperature 19.6
+Date: 2006-06-12, Time: 15:00, Temperature 19.4
+Date: 2006-06-17, Time: 14:50, Temperature 18.9
