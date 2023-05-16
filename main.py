@@ -2,6 +2,7 @@ import csv
 import datetime
 import itertools
 import logging
+import os
 from collections import Counter, defaultdict, namedtuple
 from functools import wraps
 from logging.config import dictConfig
@@ -10,7 +11,13 @@ from typing import List, Optional, Set, Tuple
 import requests
 from urllib3.exceptions import RequestError
 
-from config import OUTPUT_FILE_TPL, WEATHER_DATA_URL, WEATHER_FILENAME, log_config
+from config import (
+    GET_WEATHER_TIMEOUT,
+    OUTPUT_FILE_TPL,
+    WEATHER_DATA_URL,
+    WEATHER_FILENAME,
+    log_config,
+)
 from constants import (
     AVG_JULY_TEMPERATURE,
     HI_TEMPERATURE_DELTA,
@@ -37,9 +44,9 @@ def logging_deco(func):
 def download_weather_cvs() -> None:
     """Download csv file to local"""
     try:
-        with requests.get(WEATHER_DATA_URL, stream=True) as response, open(
-            WEATHER_FILENAME, "wb"
-        ) as f:
+        with requests.get(
+            WEATHER_DATA_URL, stream=True, timeout=GET_WEATHER_TIMEOUT
+        ) as response, open(WEATHER_FILENAME, "wb") as f:
             for line in response.iter_lines():
                 f.write(line + "\n".encode())
     except RequestError as e:
@@ -172,7 +179,7 @@ class WeatherHandler:
                     _dates.add(_date)
                     snippets.append(snippet)
             logger.info(
-                f"Created handler to process {len(_dates)} dates and {len(snippet)} weather snippets"
+                f"Created handler to process {len(_dates)} dates and {len(snippets)} weather snippets"
             )
             return cls(snippets, _dates)
         except FileNotFoundError:
@@ -307,6 +314,11 @@ class WeatherHandler:
 if __name__ == "__main__":
     download_weather_cvs()
     handler = WeatherHandler.from_csv()
+
+    try:
+        os.mkdir(OUTPUT_FILE_TPL.split("/")[0])
+    except FileExistsError:
+        pass
 
     with open(OUTPUT_FILE_TPL.format(1), "w") as f:
         f.write("What time of the day is the most commonly occurring hottest time?\n")

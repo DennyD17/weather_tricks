@@ -23,5 +23,6 @@ log_config = {
 OUTPUT_FILE_TPL = "output/task_{0}_results.txt"
 
 WEATHER_DATA_URL = "https://www.fifeweather.co.uk/cowdenbeath/200606.csv"
+GET_WEATHER_TIMEOUT = 1.0
 
 WEATHER_FILENAME = "weather_data.csv"
